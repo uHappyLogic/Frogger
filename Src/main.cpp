@@ -31,6 +31,11 @@ int main(int argc, char **argv) {
 	SDL_Renderer *renderer;
 
 	float etiSpeed;
+	int rows[15];
+	for (int i = 0; i < 480/32; i++)
+	{
+		rows[i] = ((480 - (i * 32)) - 16);
+	}
 
 	// okno konsoli nie jest widoczne, je�eli chcemy zobaczy�
 	// komunikaty wypisywane printf-em trzeba w opcjach:
@@ -73,6 +78,7 @@ int main(int argc, char **argv) {
 
 	auto carBmp = SDL_LoadBMP("./Assets/eti.bmp");
 	auto frogBmp = SDL_LoadBMP("./Assets/frog1.bmp");
+	auto planckBmp = SDL_LoadBMP("./Assets/block.bmp");
 
 	if (carBmp == NULL) {
 		printf("SDL_LoadBMP(eti.bmp) error: %s\n", SDL_GetError());
@@ -80,7 +86,12 @@ int main(int argc, char **argv) {
 	};
 
 	if (frogBmp == NULL) {
-		printf("SDL_LoadBMP(eti.bmp) error: %s\n", SDL_GetError());
+		printf("SDL_LoadBMP(frog1.bmp) error: %s\n", SDL_GetError());
+		SDL_Quit();
+	};
+
+	if (frogBmp == NULL) {
+		printf("SDL_LoadBMP(block.bmp) error: %s\n", SDL_GetError());
 		SDL_Quit();
 	};
 
@@ -118,7 +129,7 @@ int main(int argc, char **argv) {
 	);
 
 	graphicsPipelineManager.AddPipeline(
-		new PE_MovingBlock(carBmp, 30,true, sdlScreenHandler.screen, -20, SCREEN_HEIGHT / 2, &timeProvider)
+		new PE_MovingBlock(planckBmp, 30,true, sdlScreenHandler.screen, -20, rows[1], &timeProvider)
 	);
 
 	graphicsPipelineManager.AddPipeline(
