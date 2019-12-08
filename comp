@@ -1,0 +1,1 @@
+g++ -O2 -I./Includes -L. -o main main.cpp -lm -lSDL2 -lpthread -ldl -lrt
