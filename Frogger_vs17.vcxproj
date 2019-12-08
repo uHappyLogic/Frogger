@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\PipelineElements\PE_MovingEtiImage.cpp" />
     <ClCompile Include="Src\PipelineElements\PE_TimeProvider.cpp" />
     <ClCompile Include="Src\PipelineElementManager.cpp" />
     <ClCompile Include="Src\PipelineElements\PE_Background.cpp" />
@@ -68,6 +69,7 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Includes\PipelineElements\PE_MovingEtiImage.hpp" />
     <ClInclude Include="Includes\PipelineElements\PE_TimeProvider.hpp" />
     <ClInclude Include="Includes\PipelineElement.h" />
     <ClInclude Include="Includes\PipelineElementManager.h" />

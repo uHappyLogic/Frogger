@@ -13,7 +13,7 @@ public:
 	// This method is called once at the beginning ofthe game
 	virtual void Setup() = 0;
 
-	// This method is called once every frame after logic pipeline
+	// This method is called once every
 	virtual void Execute() = 0;
 
 	// This method is called once just before exit

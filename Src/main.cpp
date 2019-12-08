@@ -9,6 +9,8 @@
 
 #include "PipelineElements/PE_Background.hpp"
 #include "PipelineElements/PE_TimeProvider.hpp"
+#include "PipelineElements/PE_MovingEtiImage.hpp"
+
 
 #define SCREEN_WIDTH	640
 #define SCREEN_HEIGHT	480
@@ -18,7 +20,7 @@ int main(int argc, char **argv) {
 	double worldTime, fpsTimer, fps, distance, etiSpeed;
 	SDL_Event event;
 	SDL_Surface *charset;
-	SDL_Surface *eti;
+	
 	SDL_Texture *scrtex;
 	SDL_Window *window;
 	SDL_Renderer *renderer;
@@ -75,17 +77,7 @@ int main(int argc, char **argv) {
 		};
 	SDL_SetColorKey(charset, true, 0x000000);
 
-	eti = SDL_LoadBMP("./Assets/eti.bmp");
-	if(eti == NULL) {
-		printf("SDL_LoadBMP(eti.bmp) error: %s\n", SDL_GetError());
-		SDL_FreeSurface(charset);
-		SDL_DestroyTexture(scrtex);
-		SDL_DestroyWindow(window);
-		SDL_DestroyRenderer(renderer);
-		SDL_Quit();
-		return 1;
-		};
-
+	
 	char text[128];
 
 	t1 = SDL_GetTicks();
@@ -114,6 +106,10 @@ int main(int argc, char **argv) {
 		&timeProvider
 	);
 
+	graphicsPipelineManager.AddPipeline(
+		new PE_MovingEtiImage(sdlScreenHandler.screen,SCREEN_WIDTH,SCREEN_HEIGHT, &timeProvider)
+	);
+
 	graphicsPipelineManager.Init();
 
 	int zielony = SDL_MapRGB(sdlScreenHandler.screen->format, 0x00, 0xFF, 0x00);
@@ -126,14 +122,9 @@ int main(int argc, char **argv) {
 
 		worldTime += timeProvider.getDeltaTime();
 
-		distance += etiSpeed * timeProvider.getDeltaTime();
+		
 
-		DrawSurface(
-			sdlScreenHandler.screen,
-			eti,
-			SCREEN_WIDTH / 2 + sin(distance) * SCREEN_HEIGHT / 3,
-			SCREEN_HEIGHT / 2 + cos(distance) * SCREEN_HEIGHT / 3);
-
+		
 		fpsTimer += timeProvider.getDeltaTime();
 		if(fpsTimer > 0.5) {
 			fps = frames * 2;
