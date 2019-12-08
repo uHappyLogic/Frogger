@@ -69,8 +69,6 @@ int main(int argc, char **argv) {
 
 	SDL_ShowCursor(SDL_DISABLE);
 
-	quit = 0;
-
 	auto carBmp = SDL_LoadBMP("./Assets/eti.bmp");
 
 	if (carBmp == NULL) {
