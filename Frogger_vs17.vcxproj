@@ -19,11 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\CharsetHandler.cpp" />
     <ClCompile Include="Src\PipelineElements\PE_MovingEtiImage.cpp" />
     <ClCompile Include="Src\PipelineElements\PE_TimeProvider.cpp" />
     <ClCompile Include="Src\PipelineElementManager.cpp" />
     <ClCompile Include="Src\PipelineElements\PE_Background.cpp" />
     <ClCompile Include="Src\main.cpp" />
+    <ClCompile Include="Src\PipelineElements\PE_UpperInfo.cpp" />
     <ClCompile Include="Src\SdlScreenHandler.cpp" />
     <ClCompile Include="Src\SdlUtils.cpp" />
   </ItemGroup>
@@ -69,11 +71,13 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Includes\CharsetHandler.hpp" />
     <ClInclude Include="Includes\PipelineElements\PE_MovingEtiImage.hpp" />
     <ClInclude Include="Includes\PipelineElements\PE_TimeProvider.hpp" />
     <ClInclude Include="Includes\PipelineElement.h" />
     <ClInclude Include="Includes\PipelineElementManager.h" />
     <ClInclude Include="Includes\PipelineElements\PE_Background.hpp" />
+    <ClInclude Include="Includes\PipelineElements\PE_UpperInfo.hpp" />
     <ClInclude Include="Includes\SdlScreenHandler.h" />
     <ClInclude Include="Includes\SdlUtils.hpp" />
     <ClInclude Include="Includes\Sdl\begin_code.h" />
