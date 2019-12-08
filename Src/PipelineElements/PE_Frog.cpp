@@ -9,28 +9,42 @@ PE_Frog::PE_Frog(
 	SDL_Surface * screen,
 	int screenWidth,
 	int screenHeigh,
-	PE_TimeProvider* timeProvider)
-	:screen(screen), screenWidth(screenWidth), screenHeigh(screenHeigh), timeProvider(timeProvider), pictureSrc(pictureSrc)
+	PE_TimeProvider* timeProvider,
+	PE_EventHandler* eventHandler
+) :
+	screen(screen),
+	screenWidth(screenWidth),
+	screenHeigh(screenHeigh),
+	timeProvider(timeProvider),
+	pictureSrc(pictureSrc),
+	eventHandler(eventHandler)
 {
 
 }
 
 void PE_Frog::Setup()
 {
+	currentPosX = screenWidth / 2;
+	currentPosY = screenHeigh - 16;
 
 }
 
 void PE_Frog::Execute()
 {
+	if (eventHandler->up)
+		currentPosY -= 32;
+	if (eventHandler->down)
+		currentPosY += 32;
+	if (eventHandler->left)
+		currentPosX -= 32;
+	if (eventHandler->right)
+		currentPosX += 32;
 	
-	int currentPos_x = screenWidth/2;
-	int currentPos_y = screenHeigh-16;
-
 	DrawSurface(
 		screen,
 		pictureSrc,
-		currentPos_x,
-		currentPos_y);
+		currentPosX,
+		currentPosY);
 }
 
 void PE_Frog::Clean()

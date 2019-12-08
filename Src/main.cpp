@@ -122,7 +122,7 @@ int main(int argc, char **argv) {
 	);
 
 	graphicsPipelineManager.AddPipeline(
-		new PE_Frog(frogBmp,  sdlScreenHandler.screen, SCREEN_WIDTH, SCREEN_HEIGHT, &timeProvider)
+		new PE_Frog(frogBmp,  sdlScreenHandler.screen, SCREEN_WIDTH, SCREEN_HEIGHT, &timeProvider, &eventHandler)
 	);
 
 	graphicsPipelineManager.AddPipeline(

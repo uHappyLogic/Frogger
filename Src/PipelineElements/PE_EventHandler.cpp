@@ -25,6 +25,23 @@ void PE_EventHandler::Execute()
 			{
 				escape = true;
 			}
+			else if(event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_w)
+			{
+				up = true;
+			}
+			else if (event.key.keysym.sym == SDLK_DOWN || event.key.keysym.sym == SDLK_s)
+			{
+				down = true;
+			}
+			else if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a)
+			{
+				left = true;
+			}
+			else if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d)
+			{
+				right = true;
+			}
+
 			continue;
 		case SDL_QUIT:
 			appExit = true;

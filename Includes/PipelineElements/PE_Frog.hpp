@@ -1,5 +1,6 @@
 #include "PipelineElement.h"
 #include "PipelineElements/PE_TimeProvider.hpp"
+#include "PipelineElements/PE_EventHandler.hpp"
 
 
 class PE_Frog : public PipelineElement
@@ -11,7 +12,8 @@ public:
 		SDL_Surface * screen,
 		int screenWidth,
 		int screenHeigh,
-		PE_TimeProvider* timeProvider);
+		PE_TimeProvider* timeProvider,
+		PE_EventHandler* eventHandler);
 
 	void Setup() override;
 
@@ -26,4 +28,7 @@ private:
 	float screenHeigh;
 	PE_TimeProvider* timeProvider;
 	float distance = 0;
+	PE_EventHandler* eventHandler;
+	float currentPosX;
+	float currentPosY;
 };
