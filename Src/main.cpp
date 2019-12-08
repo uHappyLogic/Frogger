@@ -15,6 +15,8 @@
 #include "PipelineElements/PE_QuitHandler.hpp"
 #include "PipelineElements/PE_EventHandler.hpp"
 #include "PipelineElements/PE_MovingBlock.hpp"
+#include "PipelineElements/PE_Frog.hpp"
+
 
 
 #define SCREEN_WIDTH	640
@@ -70,8 +72,14 @@ int main(int argc, char **argv) {
 	SDL_ShowCursor(SDL_DISABLE);
 
 	auto carBmp = SDL_LoadBMP("./Assets/eti.bmp");
+	auto frogBmp = SDL_LoadBMP("./Assets/frog1.bmp");
 
 	if (carBmp == NULL) {
+		printf("SDL_LoadBMP(eti.bmp) error: %s\n", SDL_GetError());
+		SDL_Quit();
+	};
+
+	if (frogBmp == NULL) {
 		printf("SDL_LoadBMP(eti.bmp) error: %s\n", SDL_GetError());
 		SDL_Quit();
 	};
@@ -108,8 +116,13 @@ int main(int argc, char **argv) {
 	graphicsPipelineManager.AddPipeline(
 		new PE_MovingBlock(carBmp, 30,false,sdlScreenHandler.screen, SCREEN_WIDTH, SCREEN_HEIGHT/4, &timeProvider)
 	);
+
 	graphicsPipelineManager.AddPipeline(
 		new PE_MovingBlock(carBmp, 30,true, sdlScreenHandler.screen, -20, SCREEN_HEIGHT / 2, &timeProvider)
+	);
+
+	graphicsPipelineManager.AddPipeline(
+		new PE_Frog(frogBmp,  sdlScreenHandler.screen, SCREEN_WIDTH, SCREEN_HEIGHT, &timeProvider)
 	);
 
 	graphicsPipelineManager.AddPipeline(
