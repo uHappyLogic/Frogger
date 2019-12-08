@@ -34,8 +34,10 @@
     <ClCompile Include="Src\SdlUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Assets\block.bmp" />
     <Image Include="Assets\cs8x8.bmp" />
     <Image Include="Assets\eti.bmp" />
+    <Image Include="Assets\frog1.bmp" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Dlls\Sdl\x64\Debug\SDL2.dll">
