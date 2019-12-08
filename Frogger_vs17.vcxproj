@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\CharsetHandler.cpp" />
+    <ClCompile Include="Src\PipelineElements\PE_EventHandler.cpp" />
     <ClCompile Include="Src\PipelineElements\PE_MovingEtiImage.cpp" />
     <ClCompile Include="Src\PipelineElements\PE_QuitHandler.cpp" />
     <ClCompile Include="Src\PipelineElements\PE_TimeProvider.cpp" />
@@ -73,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Includes\CharsetHandler.hpp" />
+    <ClInclude Include="Includes\PipelineElements\PE_EventHandler.hpp" />
     <ClInclude Include="Includes\PipelineElements\PE_MovingEtiImage.hpp" />
     <ClInclude Include="Includes\PipelineElements\PE_QuitHandler.hpp" />
     <ClInclude Include="Includes\PipelineElements\PE_TimeProvider.hpp" />

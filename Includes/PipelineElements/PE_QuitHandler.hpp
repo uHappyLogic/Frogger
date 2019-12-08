@@ -1,19 +1,16 @@
 #pragma once
 
-#include "PipelineElement.h"
 #include "SdlScreenHandler.h"
-class PE_QuitHandler : public PipelineElement 
+
+#include "PipelineElements/PE_EventHandler.hpp"
+
+class PE_QuitHandler
 {
 public:
 
-	PE_QuitHandler();
-
-	void Setup() override;
-
-	void Execute() override;
-
-	void Clean() override;
+	PE_QuitHandler(PE_EventHandler* eventHandler);
  
-	bool shouldQuit = false;
+	bool ShouldQuit();
 
+	PE_EventHandler* eventHandler;
 };

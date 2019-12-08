@@ -13,6 +13,7 @@
 #include "PipelineElements/PE_MovingEtiImage.hpp"
 #include "PipelineElements/PE_UpperInfo.hpp"
 #include "PipelineElements/PE_QuitHandler.hpp"
+#include "PipelineElements/PE_EventHandler.hpp"
 
 
 #define SCREEN_WIDTH	640
@@ -74,10 +75,16 @@ int main(int argc, char **argv) {
 	auto timeProvider = PE_TimeProvider();
 	auto charsetHandler = CharsetHandler();
 
-	auto quitHandler = PE_QuitHandler();
+	auto eventHandler = PE_EventHandler();
+
+	auto quitHandler = PE_QuitHandler(&eventHandler);
 
 	auto graphicsPipelineManager = PipelineElementManager(
 		&sdlScreenHandler	
+	);
+
+	graphicsPipelineManager.AddPipeline(
+		&eventHandler
 	);
 
 	graphicsPipelineManager.AddPipeline(
@@ -86,10 +93,6 @@ int main(int argc, char **argv) {
 
 	graphicsPipelineManager.AddPipeline(
 		&timeProvider
-	);
-
-	graphicsPipelineManager.AddPipeline(
-		&quitHandler
 	);
 
 	graphicsPipelineManager.AddPipeline(
@@ -108,7 +111,7 @@ int main(int argc, char **argv) {
 
 	graphicsPipelineManager.Init();
 
-	while(!quitHandler.shouldQuit) {
+	while(!quitHandler.ShouldQuit()) {
 		graphicsPipelineManager.RunAllElements();
 
 		SDL_UpdateTexture(
