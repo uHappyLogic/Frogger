@@ -1,15 +1,15 @@
 #pragma once
 
-#include "GraphicsPipelineManager.h"
+#include "PipelineElementManager.h"
 
 
-GraphicsPipelineManager::GraphicsPipelineManager(SdlScreenHandler *sdlScreenHandler)
+PipelineElementManager::PipelineElementManager(SdlScreenHandler *sdlScreenHandler)
 	: sdlScreenHandler(sdlScreenHandler)
 {
-	this->previousTick = SDL_GetTicks();
+
 }
 
-void GraphicsPipelineManager::AddPipeline(GraphicsPipelineElement* element)
+void PipelineElementManager::AddPipeline(PipelineElement* element)
 {
 	if (this->head == nullptr)
 	{
@@ -33,33 +33,30 @@ void GraphicsPipelineManager::AddPipeline(GraphicsPipelineElement* element)
 }
 
 
-void GraphicsPipelineManager::RunAllElements()
-{
-	int currentTick = SDL_GetTicks();
-	float delta = delta = (this->previousTick - currentTick) * 0.001f;
-
-	Node* curr = this->head;
-
-	while (curr)
-	{
-		curr->element->Draw(*this->sdlScreenHandler->screen, delta);
-		curr = curr->next;
-	}
-}
-
-
-void GraphicsPipelineManager::Init()
+void PipelineElementManager::RunAllElements()
 {
 	Node* curr = this->head;
 
 	while (curr)
 	{
-		curr->element->Setup(*this->sdlScreenHandler->screen);
+		curr->element->Execute();
 		curr = curr->next;
 	}
 }
 
-GraphicsPipelineManager::~GraphicsPipelineManager()
+
+void PipelineElementManager::Init()
+{
+	Node* curr = this->head;
+
+	while (curr)
+	{
+		curr->element->Setup();
+		curr = curr->next;
+	}
+}
+
+PipelineElementManager::~PipelineElementManager()
 {
 	Node* prev = this->head;
 
@@ -78,7 +75,7 @@ GraphicsPipelineManager::~GraphicsPipelineManager()
 	delete prev;
 }
 
-GraphicsPipelineManager::Node::~Node()
+PipelineElementManager::Node::~Node()
 {
 	delete element;
 	element = nullptr;

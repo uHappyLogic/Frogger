@@ -5,16 +5,17 @@
 
 #include "SdlUtils.hpp"
 #include "SdlScreenHandler.h"
-#include "GraphicsPipelineManager.h"
+#include "PipelineElementManager.h"
 
-#include "GraphicsPipelines/GPE_Background.hpp"
+#include "PipelineElements/PE_Background.hpp"
+#include "PipelineElements/PE_TimeProvider.hpp"
 
 #define SCREEN_WIDTH	640
 #define SCREEN_HEIGHT	480
 
 int main(int argc, char **argv) {
 	int t1, t2, quit, frames, rc;
-	double delta, worldTime, fpsTimer, fps, distance, etiSpeed;
+	double worldTime, fpsTimer, fps, distance, etiSpeed;
 	SDL_Event event;
 	SDL_Surface *charset;
 	SDL_Surface *eti;
@@ -59,7 +60,6 @@ int main(int argc, char **argv) {
 	                           SDL_TEXTUREACCESS_STREAMING,
 	                           SCREEN_WIDTH, SCREEN_HEIGHT);
 
-
 	// wy³¹czenie widocznoœci kursora myszy
 	SDL_ShowCursor(SDL_DISABLE);
 
@@ -88,8 +88,6 @@ int main(int argc, char **argv) {
 
 	char text[128];
 
-
-
 	t1 = SDL_GetTicks();
 
 	frames = 0;
@@ -101,16 +99,22 @@ int main(int argc, char **argv) {
 	etiSpeed = 1;
 
 	auto sdlScreenHandler = SdlScreenHandler(SCREEN_WIDTH, SCREEN_HEIGHT);
-	auto graphicsPipelineManager = GraphicsPipelineManager(
+
+	auto timeProvider = PE_TimeProvider();
+
+	auto graphicsPipelineManager = PipelineElementManager(
 		&sdlScreenHandler	
 	);
 
 	graphicsPipelineManager.AddPipeline(
-		new GPE_Background()
+		new PE_Background(sdlScreenHandler.screen)
+	);
+
+	graphicsPipelineManager.AddPipeline(
+		&timeProvider
 	);
 
 	graphicsPipelineManager.Init();
-
 
 	int zielony = SDL_MapRGB(sdlScreenHandler.screen->format, 0x00, 0xFF, 0x00);
 	int czerwony = SDL_MapRGB(sdlScreenHandler.screen->format, 0xFF, 0x00, 0x00);
@@ -118,22 +122,11 @@ int main(int argc, char **argv) {
 
 
 	while(!quit) {
-		t2 = SDL_GetTicks();
-
 		graphicsPipelineManager.RunAllElements();
 
-		// w tym momencie t2-t1 to czas w milisekundach,
-		// jaki uplyna³ od ostatniego narysowania ekranu
-		// delta to ten sam czas w sekundach
-		// here t2-t1 is the time in milliseconds since
-		// the last screen was drawn
-		// delta is the same time in seconds
-		delta = (t2 - t1) * 0.001;
-		t1 = t2;
+		worldTime += timeProvider.getDeltaTime();
 
-		worldTime += delta;
-
-		distance += etiSpeed * delta;
+		distance += etiSpeed * timeProvider.getDeltaTime();
 
 		DrawSurface(
 			sdlScreenHandler.screen,
@@ -141,7 +134,7 @@ int main(int argc, char **argv) {
 			SCREEN_WIDTH / 2 + sin(distance) * SCREEN_HEIGHT / 3,
 			SCREEN_HEIGHT / 2 + cos(distance) * SCREEN_HEIGHT / 3);
 
-		fpsTimer += delta;
+		fpsTimer += timeProvider.getDeltaTime();
 		if(fpsTimer > 0.5) {
 			fps = frames * 2;
 			frames = 0;
@@ -201,4 +194,4 @@ int main(int argc, char **argv) {
 
 	SDL_Quit();
 	return 0;
-	};
+};

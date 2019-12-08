@@ -6,15 +6,15 @@ extern "C" {
 
 #include "SdlScreenHandler.h"
 
-class GraphicsPipelineElement
+class PipelineElement
 {
 public:
 
 	// This method is called once at the beginning ofthe game
-	virtual void Setup(SDL_Surface& screen) = 0;
+	virtual void Setup() = 0;
 
 	// This method is called once every frame after logic pipeline
-	virtual void Draw(SDL_Surface& screen, const float time_delta) = 0;
+	virtual void Execute() = 0;
 
 	// This method is called once just before exit
 	virtual void Clean() = 0;

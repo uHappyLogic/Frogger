@@ -19,8 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src\GraphicsPipelineManager.cpp" />
-    <ClCompile Include="Src\GraphicsPipelines\GPE_Background.cpp" />
+    <ClCompile Include="Src\PipelineElements\PE_TimeProvider.cpp" />
+    <ClCompile Include="Src\PipelineElementManager.cpp" />
+    <ClCompile Include="Src\PipelineElements\PE_Background.cpp" />
     <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\SdlScreenHandler.cpp" />
     <ClCompile Include="Src\SdlUtils.cpp" />
@@ -67,9 +68,10 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Includes\GraphicsPipelineElement.h" />
-    <ClInclude Include="Includes\GraphicsPipelineManager.h" />
-    <ClInclude Include="Includes\GraphicsPipelines\GPE_Background.hpp" />
+    <ClInclude Include="Includes\PipelineElements\PE_TimeProvider.hpp" />
+    <ClInclude Include="Includes\PipelineElement.h" />
+    <ClInclude Include="Includes\PipelineElementManager.h" />
+    <ClInclude Include="Includes\PipelineElements\PE_Background.hpp" />
     <ClInclude Include="Includes\SdlScreenHandler.h" />
     <ClInclude Include="Includes\SdlUtils.hpp" />
     <ClInclude Include="Includes\Sdl\begin_code.h" />
