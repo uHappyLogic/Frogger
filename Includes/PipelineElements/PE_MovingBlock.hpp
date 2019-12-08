@@ -1,8 +1,11 @@
-#include "PipelineElement.h"
+#pragma once
+
+#include "CollidablePipelineElement.hpp"
 #include "PipelineElements/PE_TimeProvider.hpp"
+#include "PipelineElements/PE_Frog.hpp"
 
 
-class PE_MovingBlock : public PipelineElement
+class PE_MovingBlock : public CollidablePipelineElement
 {
 public:
 
@@ -13,13 +16,18 @@ public:
 		SDL_Surface * screen,
 		int  currentPos_x,
 		int currentPos_y,
-		PE_TimeProvider* timeProvider);
+		PE_TimeProvider* timeProvider,
+		PE_Frog* frog);
 
 	void Setup() override;
 
 	void Execute() override;
 
 	void Clean() override;
+
+	CollisionRect GetCollisionRect();
+
+	void Collide(bool collide);
 
 private:
 	int speed;
@@ -30,4 +38,5 @@ private:
 	float currentPos_y;
 	PE_TimeProvider* timeProvider;
 	float distance = 0;
+	PE_Frog* frog;
 };

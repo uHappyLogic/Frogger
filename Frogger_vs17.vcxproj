@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\CharsetHandler.cpp" />
+    <ClCompile Include="Src\CollidableManager.cpp" />
     <ClCompile Include="Src\PipelineElements\PE_EventHandler.cpp" />
     <ClCompile Include="Src\PipelineElements\PE_Frog.cpp" />
     <ClCompile Include="Src\PipelineElements\PE_MovingBlock.cpp" />
@@ -78,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Includes\CharsetHandler.hpp" />
+    <ClInclude Include="Includes\CollidableManager.hpp" />
     <ClInclude Include="Includes\CollidablePipelineElement.hpp" />
     <ClInclude Include="Includes\PipelineElements\PE_EventHandler.hpp" />
     <ClInclude Include="Includes\PipelineElements\PE_Frog.hpp" />

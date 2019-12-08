@@ -3,10 +3,16 @@
 #include "PipelineElementManager.h"
 
 
-PipelineElementManager::PipelineElementManager(SdlScreenHandler *sdlScreenHandler)
-	: sdlScreenHandler(sdlScreenHandler)
+PipelineElementManager::PipelineElementManager(CollidableManager *collidableManager)
+	: collidableManager(collidableManager)
 {
 
+}
+
+void PipelineElementManager::AddPipeline(CollidablePipelineElement* element)
+{
+	collidableManager->AddCollidable(element);
+	this->AddPipeline((PipelineElement*)element);
 }
 
 void PipelineElementManager::AddPipeline(PipelineElement* element)

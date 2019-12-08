@@ -11,8 +11,17 @@ PE_MovingBlock::PE_MovingBlock(
 	SDL_Surface * screen,
 	int currentPos_x,
 	int currentPos_y,
-	PE_TimeProvider* timeProvider)
-	:screen(screen), currentPos_x(currentPos_x), currentPos_y(currentPos_y), timeProvider(timeProvider), movingLeft(movingLeft), speed(speed), pictureSrc(pictureSrc)
+	PE_TimeProvider* timeProvider,
+	PE_Frog* frog)
+	:
+	screen(screen),
+	currentPos_x(currentPos_x),
+	currentPos_y(currentPos_y),
+	timeProvider(timeProvider),
+	movingLeft(movingLeft),
+	speed(speed),
+	pictureSrc(pictureSrc),
+	frog(frog)
 {
 
 }
@@ -37,4 +46,23 @@ void PE_MovingBlock::Execute()
 void PE_MovingBlock::Clean()
 {
 
+}
+
+CollidablePipelineElement::CollisionRect PE_MovingBlock::GetCollisionRect()
+{
+	auto rect = CollidablePipelineElement::CollisionRect();
+	rect.width = pictureSrc->w;
+	rect.height = pictureSrc->h;
+	rect.x = currentPos_x;
+	rect.y = currentPos_y;
+
+	return rect;
+}
+
+void PE_MovingBlock::Collide(bool collide)
+{
+	if (collide)
+	{
+		frog->ResetToStartPosition();
+	}
 }

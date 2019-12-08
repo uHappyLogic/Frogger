@@ -2,7 +2,7 @@
 
 #include "PipelineElement.h"
 
-class CollidablePipelineElement : PipelineElement
+class CollidablePipelineElement : public PipelineElement
 {
 public:
 
@@ -16,5 +16,5 @@ public:
 
 	virtual CollisionRect GetCollisionRect() = 0;
 
-	virtual void OnCollision() = 0;
+	virtual void Collide(bool collide) = 0;
 };

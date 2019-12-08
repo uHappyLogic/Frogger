@@ -1,3 +1,5 @@
+#pragma once
+
 #include "PipelineElement.h"
 #include "PipelineElements/PE_TimeProvider.hpp"
 #include "PipelineElements/PE_EventHandler.hpp"
@@ -21,6 +23,12 @@ public:
 
 	void Clean() override;
 
+	float GetCenterX();
+
+	float GetCenterY();
+
+	void ResetToStartPosition();
+
 private:
 	SDL_Surface * screen;
 	SDL_Surface * pictureSrc;
@@ -31,4 +39,6 @@ private:
 	PE_EventHandler* eventHandler;
 	float currentPosX;
 	float currentPosY;
+	float startPosX;
+	float startPosY;
 };

@@ -7,6 +7,7 @@
 #include "SdlScreenHandler.h"
 #include "PipelineElementManager.h"
 #include "CharsetHandler.hpp"
+#include "CollidableManager.hpp"
 
 #include "PipelineElements/PE_Background.hpp"
 #include "PipelineElements/PE_TimeProvider.hpp"
@@ -101,11 +102,15 @@ int main(int argc, char **argv) {
 	auto charsetHandler = CharsetHandler();
 
 	auto eventHandler = PE_EventHandler();
+	
+	auto frog = new PE_Frog(frogBmp, sdlScreenHandler.screen, SCREEN_WIDTH, SCREEN_HEIGHT, &timeProvider, &eventHandler);
+
+	auto collidableManager = CollidableManager(frog);
 
 	auto quitHandler = PE_QuitHandler(&eventHandler);
 
 	auto graphicsPipelineManager = PipelineElementManager(
-		&sdlScreenHandler	
+		&collidableManager
 	);
 
 	graphicsPipelineManager.AddPipeline(
@@ -125,15 +130,15 @@ int main(int argc, char **argv) {
 	);
 
 	graphicsPipelineManager.AddPipeline(
-		new PE_MovingBlock(carBmp, 30,false,sdlScreenHandler.screen, SCREEN_WIDTH, SCREEN_HEIGHT/4, &timeProvider)
+		new PE_MovingBlock(carBmp, 30,false,sdlScreenHandler.screen, SCREEN_WIDTH, SCREEN_HEIGHT/4, &timeProvider, frog)
 	);
 
 	graphicsPipelineManager.AddPipeline(
-		new PE_MovingBlock(planckBmp, 30,true, sdlScreenHandler.screen, -20, rows[1], &timeProvider)
+		new PE_MovingBlock(planckBmp, 30,true, sdlScreenHandler.screen, -20, rows[1], &timeProvider, frog)
 	);
 
 	graphicsPipelineManager.AddPipeline(
-		new PE_Frog(frogBmp,  sdlScreenHandler.screen, SCREEN_WIDTH, SCREEN_HEIGHT, &timeProvider, &eventHandler)
+		frog
 	);
 
 	graphicsPipelineManager.AddPipeline(
@@ -155,7 +160,9 @@ int main(int argc, char **argv) {
 			scrtex, NULL, sdlScreenHandler.screen->pixels, sdlScreenHandler.screen->pitch);
 
 		SDL_RenderCopy(renderer, scrtex, NULL, NULL);
-		SDL_RenderPresent(renderer);		
+		SDL_RenderPresent(renderer);
+
+		collidableManager.TriggerCollision();
 	};
 
 	SDL_DestroyTexture(scrtex);

@@ -27,6 +27,8 @@ void PE_Frog::Setup()
 	currentPosX = screenWidth / 2;
 	currentPosY = screenHeigh - 16;
 
+	startPosX = currentPosX;
+	startPosY = currentPosY;
 }
 
 void PE_Frog::Execute()
@@ -50,4 +52,20 @@ void PE_Frog::Execute()
 void PE_Frog::Clean()
 {
 
+}
+
+float PE_Frog::GetCenterX()
+{
+	return currentPosX;
+}
+
+float PE_Frog::GetCenterY()
+{
+	return currentPosY;
+}
+
+void PE_Frog::ResetToStartPosition()
+{
+	currentPosX = startPosX;
+	currentPosY = startPosY;
 }
