@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\main.cpp" />
+    <ClCompile Include="Src\SdlUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\cs8x8.bmp" />
@@ -63,6 +64,7 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Includes\SdlUtils.hpp" />
     <ClInclude Include="Includes\Sdl\begin_code.h" />
     <ClInclude Include="Includes\Sdl\close_code.h" />
     <ClInclude Include="Includes\Sdl\SDL.h" />
@@ -238,7 +240,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)\Includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>.\Libs\Sdl\x86\sdl2.lib;.\Libs\Sdl\x86\sdl2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -253,7 +255,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)\Includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>.\Libs\Sdl\x64\sdl2.lib;.\Libs\Sdl\x64\sdl2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -270,7 +272,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)\Includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -289,7 +291,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)\Includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
