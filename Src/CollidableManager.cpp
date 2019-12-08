@@ -59,8 +59,8 @@ void CollidableManager::TriggerCollision()
 
 		if (isOnTheSameYAxis && isOnTheSameXAxis)
 		{
-			curr->element->Collide(true);
-			return;
+			if (curr->element->Collide(true))
+				return;
 		}
 		else
 		{

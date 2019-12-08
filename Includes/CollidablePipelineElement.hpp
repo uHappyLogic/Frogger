@@ -16,5 +16,6 @@ public:
 
 	virtual CollisionRect GetCollisionRect() = 0;
 
-	virtual void Collide(bool collide) = 0;
+	// returns true if collisions check shall be stopped
+	virtual bool Collide(bool collide) = 0;
 };

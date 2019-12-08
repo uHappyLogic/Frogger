@@ -12,7 +12,8 @@ PE_MovingBlock::PE_MovingBlock(
 	int currentPos_x,
 	int currentPos_y,
 	PE_TimeProvider* timeProvider,
-	PE_Frog* frog)
+	PE_Frog* frog,
+	action_options::ActionOptions ap)
 	:
 	screen(screen),
 	currentPos_x(currentPos_x),
@@ -21,7 +22,8 @@ PE_MovingBlock::PE_MovingBlock(
 	movingLeft(movingLeft),
 	speed(speed),
 	pictureSrc(pictureSrc),
-	frog(frog)
+	frog(frog),
+	ap(ap)
 {
 
 }
@@ -59,10 +61,26 @@ CollidablePipelineElement::CollisionRect PE_MovingBlock::GetCollisionRect()
 	return rect;
 }
 
-void PE_MovingBlock::Collide(bool collide)
+bool PE_MovingBlock::Collide(bool collide)
 {
 	if (collide)
 	{
-		frog->ResetToStartPosition();
+		switch (ap)
+		{
+		case action_options::NOTHING:
+			break;
+		case action_options::MOVE_TO_START:
+			frog->ResetToStartPosition();
+			printf("Moving to start position\n");
+			break;
+		case action_options::DRAG:
+			break;
+		default:
+			break;
+		}
+
+		return ap != action_options::NOTHING;
 	}
+
+	return false;
 }

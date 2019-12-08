@@ -5,6 +5,16 @@
 #include "PipelineElements/PE_Frog.hpp"
 
 
+namespace action_options
+{
+	enum ActionOptions
+	{
+		NOTHING,
+		MOVE_TO_START,
+		DRAG
+	};
+}
+
 class PE_MovingBlock : public CollidablePipelineElement
 {
 public:
@@ -17,7 +27,8 @@ public:
 		int  currentPos_x,
 		int currentPos_y,
 		PE_TimeProvider* timeProvider,
-		PE_Frog* frog);
+		PE_Frog* frog,
+		action_options::ActionOptions ap);
 
 	void Setup() override;
 
@@ -27,7 +38,7 @@ public:
 
 	CollisionRect GetCollisionRect();
 
-	void Collide(bool collide);
+	bool Collide(bool collide);
 
 private:
 	int speed;
@@ -39,4 +50,5 @@ private:
 	PE_TimeProvider* timeProvider;
 	float distance = 0;
 	PE_Frog* frog;
+	action_options::ActionOptions ap;
 };

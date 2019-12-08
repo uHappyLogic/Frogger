@@ -26,6 +26,7 @@
     <ClCompile Include="Src\PipelineElements\PE_MovingBlock.cpp" />
     <ClCompile Include="Src\PipelineElements\PE_MovingEtiImage.cpp" />
     <ClCompile Include="Src\PipelineElements\PE_QuitHandler.cpp" />
+    <ClCompile Include="Src\PipelineElements\PE_River.cpp" />
     <ClCompile Include="Src\PipelineElements\PE_TimeProvider.cpp" />
     <ClCompile Include="Src\PipelineElementManager.cpp" />
     <ClCompile Include="Src\PipelineElements\PE_Background.cpp" />
@@ -36,9 +37,14 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\block.bmp" />
+    <Image Include="Assets\blueCar.bmp" />
     <Image Include="Assets\cs8x8.bmp" />
     <Image Include="Assets\eti.bmp" />
     <Image Include="Assets\frog1.bmp" />
+    <Image Include="Assets\greenCar.bmp" />
+    <Image Include="Assets\redCar.bmp" />
+    <Image Include="Assets\river.bmp" />
+    <Image Include="Assets\road.bmp" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Dlls\Sdl\x64\Debug\SDL2.dll">
@@ -86,6 +92,7 @@
     <ClInclude Include="Includes\PipelineElements\PE_MovingBlock.hpp" />
     <ClInclude Include="Includes\PipelineElements\PE_MovingEtiImage.hpp" />
     <ClInclude Include="Includes\PipelineElements\PE_QuitHandler.hpp" />
+    <ClInclude Include="Includes\PipelineElements\PE_River.hpp" />
     <ClInclude Include="Includes\PipelineElements\PE_TimeProvider.hpp" />
     <ClInclude Include="Includes\PipelineElement.h" />
     <ClInclude Include="Includes\PipelineElementManager.h" />
