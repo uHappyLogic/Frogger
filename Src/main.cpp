@@ -4,16 +4,19 @@
 #include<string.h>
 
 #include "SdlUtils.hpp"
+#include "SdlScreenHandler.h"
+#include "GraphicsPipelineManager.h"
+
+#include "GraphicsPipelines/GPE_Background.hpp"
 
 #define SCREEN_WIDTH	640
 #define SCREEN_HEIGHT	480
-
 
 int main(int argc, char **argv) {
 	int t1, t2, quit, frames, rc;
 	double delta, worldTime, fpsTimer, fps, distance, etiSpeed;
 	SDL_Event event;
-	SDL_Surface *screen, *charset;
+	SDL_Surface *charset;
 	SDL_Surface *eti;
 	SDL_Texture *scrtex;
 	SDL_Window *window;
@@ -52,10 +55,6 @@ int main(int argc, char **argv) {
 
 	SDL_SetWindowTitle(window, "Szablon do zdania drugiego 2017");
 
-
-	screen = SDL_CreateRGBSurface(0, SCREEN_WIDTH, SCREEN_HEIGHT, 32,
-	                              0x00FF0000, 0x0000FF00, 0x000000FF, 0xFF000000);
-
 	scrtex = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888,
 	                           SDL_TEXTUREACCESS_STREAMING,
 	                           SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -68,7 +67,6 @@ int main(int argc, char **argv) {
 	charset = SDL_LoadBMP("./Assets/cs8x8.bmp");
 	if(charset == NULL) {
 		printf("SDL_LoadBMP(cs8x8.bmp) error: %s\n", SDL_GetError());
-		SDL_FreeSurface(screen);
 		SDL_DestroyTexture(scrtex);
 		SDL_DestroyWindow(window);
 		SDL_DestroyRenderer(renderer);
@@ -81,7 +79,6 @@ int main(int argc, char **argv) {
 	if(eti == NULL) {
 		printf("SDL_LoadBMP(eti.bmp) error: %s\n", SDL_GetError());
 		SDL_FreeSurface(charset);
-		SDL_FreeSurface(screen);
 		SDL_DestroyTexture(scrtex);
 		SDL_DestroyWindow(window);
 		SDL_DestroyRenderer(renderer);
@@ -90,10 +87,8 @@ int main(int argc, char **argv) {
 		};
 
 	char text[128];
-	int czarny = SDL_MapRGB(screen->format, 0x00, 0x00, 0x00);
-	int zielony = SDL_MapRGB(screen->format, 0x00, 0xFF, 0x00);
-	int czerwony = SDL_MapRGB(screen->format, 0xFF, 0x00, 0x00);
-	int niebieski = SDL_MapRGB(screen->format, 0x11, 0x11, 0xCC);
+
+
 
 	t1 = SDL_GetTicks();
 
@@ -105,8 +100,27 @@ int main(int argc, char **argv) {
 	distance = 0;
 	etiSpeed = 1;
 
+	auto sdlScreenHandler = SdlScreenHandler(SCREEN_WIDTH, SCREEN_HEIGHT);
+	auto graphicsPipelineManager = GraphicsPipelineManager(
+		&sdlScreenHandler	
+	);
+
+	graphicsPipelineManager.AddPipeline(
+		new GPE_Background()
+	);
+
+	graphicsPipelineManager.Init();
+
+
+	int zielony = SDL_MapRGB(sdlScreenHandler.screen->format, 0x00, 0xFF, 0x00);
+	int czerwony = SDL_MapRGB(sdlScreenHandler.screen->format, 0xFF, 0x00, 0x00);
+	int niebieski = SDL_MapRGB(sdlScreenHandler.screen->format, 0x11, 0x11, 0xCC);
+
+
 	while(!quit) {
 		t2 = SDL_GetTicks();
+
+		graphicsPipelineManager.RunAllElements();
 
 		// w tym momencie t2-t1 to czas w milisekundach,
 		// jaki uplyna³ od ostatniego narysowania ekranu
@@ -121,11 +135,11 @@ int main(int argc, char **argv) {
 
 		distance += etiSpeed * delta;
 
-		SDL_FillRect(screen, NULL, czarny);
-
-		DrawSurface(screen, eti,
-		            SCREEN_WIDTH / 2 + sin(distance) * SCREEN_HEIGHT / 3,
-			    SCREEN_HEIGHT / 2 + cos(distance) * SCREEN_HEIGHT / 3);
+		DrawSurface(
+			sdlScreenHandler.screen,
+			eti,
+			SCREEN_WIDTH / 2 + sin(distance) * SCREEN_HEIGHT / 3,
+			SCREEN_HEIGHT / 2 + cos(distance) * SCREEN_HEIGHT / 3);
 
 		fpsTimer += delta;
 		if(fpsTimer > 0.5) {
@@ -135,15 +149,27 @@ int main(int argc, char **argv) {
 			};
 
 		// tekst informacyjny / info text
-		DrawRectangle(screen, 4, 4, SCREEN_WIDTH - 8, 36, czerwony, niebieski);
-		//            "template for the second project, elapsed time = %.1lf s  %.0lf frames / s"
+		DrawRectangle(
+			sdlScreenHandler.screen, 4, 4, SCREEN_WIDTH - 8, 36, czerwony, niebieski
+		);
+		
+		//            "template for the second project, elapsed time = %.1lf s  %.0lf frames / s"		
 		sprintf(text, "Szablon drugiego zadania, czas trwania = %.1lf s  %.0lf klatek / s", worldTime, fps);
-		DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, 10, text, charset);
+		
+		DrawString(
+			sdlScreenHandler.screen,
+			sdlScreenHandler.screen->w / 2 - strlen(text) * 8 / 2, 10, text, charset
+		);
 		//	      "Esc - exit, \030 - faster, \031 - slower"
 		sprintf(text, "Esc - wyjscie, \030 - przyspieszenie, \031 - zwolnienie");
-		DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, 26, text, charset);
+		DrawString(
+			sdlScreenHandler.screen,
+			sdlScreenHandler.screen->w / 2 - strlen(text) * 8 / 2, 26, text, charset
+		);
 
-		SDL_UpdateTexture(scrtex, NULL, screen->pixels, screen->pitch);
+		SDL_UpdateTexture(
+			scrtex, NULL, sdlScreenHandler.screen->pixels, sdlScreenHandler.screen->pitch);
+
 //		SDL_RenderClear(renderer);
 		SDL_RenderCopy(renderer, scrtex, NULL, NULL);
 		SDL_RenderPresent(renderer);
@@ -169,7 +195,6 @@ int main(int argc, char **argv) {
 
 	// zwolnienie powierzchni / freeing all surfaces
 	SDL_FreeSurface(charset);
-	SDL_FreeSurface(screen);
 	SDL_DestroyTexture(scrtex);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);

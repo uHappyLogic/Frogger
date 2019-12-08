@@ -19,7 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\GraphicsPipelineManager.cpp" />
+    <ClCompile Include="Src\GraphicsPipelines\GPE_Background.cpp" />
     <ClCompile Include="Src\main.cpp" />
+    <ClCompile Include="Src\SdlScreenHandler.cpp" />
     <ClCompile Include="Src\SdlUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +67,10 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Includes\GraphicsPipelineElement.h" />
+    <ClInclude Include="Includes\GraphicsPipelineManager.h" />
+    <ClInclude Include="Includes\GraphicsPipelines\GPE_Background.hpp" />
+    <ClInclude Include="Includes\SdlScreenHandler.h" />
     <ClInclude Include="Includes\SdlUtils.hpp" />
     <ClInclude Include="Includes\Sdl\begin_code.h" />
     <ClInclude Include="Includes\Sdl\close_code.h" />
