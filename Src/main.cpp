@@ -10,6 +10,7 @@
 #include "PipelineElements/PE_Background.hpp"
 #include "PipelineElements/PE_TimeProvider.hpp"
 #include "PipelineElements/PE_MovingEtiImage.hpp"
+#include "PipelineElements/PE_QuitHandler.hpp"
 
 
 #define SCREEN_WIDTH	640
@@ -94,6 +95,8 @@ int main(int argc, char **argv) {
 
 	auto timeProvider = PE_TimeProvider();
 
+	auto quitHandler = PE_QuitHandler();
+
 	auto graphicsPipelineManager = PipelineElementManager(
 		&sdlScreenHandler	
 	);
@@ -107,8 +110,13 @@ int main(int argc, char **argv) {
 	);
 
 	graphicsPipelineManager.AddPipeline(
+		&quitHandler
+	);
+
+	graphicsPipelineManager.AddPipeline(
 		new PE_MovingEtiImage(sdlScreenHandler.screen,SCREEN_WIDTH,SCREEN_HEIGHT, & timeProvider)
 	);
+
 
 	graphicsPipelineManager.Init();
 
@@ -117,7 +125,7 @@ int main(int argc, char **argv) {
 	int niebieski = SDL_MapRGB(sdlScreenHandler.screen->format, 0x11, 0x11, 0xCC);
 
 
-	while(!quit) {
+	while(!quitHandler.shouldQuit) {
 		graphicsPipelineManager.RunAllElements();
 
 		worldTime += timeProvider.getDeltaTime();
@@ -156,24 +164,7 @@ int main(int argc, char **argv) {
 
 //		SDL_RenderClear(renderer);
 		SDL_RenderCopy(renderer, scrtex, NULL, NULL);
-		SDL_RenderPresent(renderer);
-
-		// obs³uga zdarzeñ (o ile jakieœ zasz³y) / handling of events (if there were any)
-		while(SDL_PollEvent(&event)) {
-			switch(event.type) {
-				case SDL_KEYDOWN:
-					if(event.key.keysym.sym == SDLK_ESCAPE) quit = 1;
-					else if(event.key.keysym.sym == SDLK_UP) etiSpeed = 2.0;
-					else if(event.key.keysym.sym == SDLK_DOWN) etiSpeed = 0.3;
-					break;
-				case SDL_KEYUP:
-					etiSpeed = 1.0;
-					break;
-				case SDL_QUIT:
-					quit = 1;
-					break;
-				};
-			};
+		SDL_RenderPresent(renderer);		
 		frames++;
 		};
 
