@@ -130,12 +130,9 @@ int main(int argc, char **argv) {
 		SDL_UpdateTexture(
 			scrtex, NULL, sdlScreenHandler.screen->pixels, sdlScreenHandler.screen->pitch);
 
-//		SDL_RenderClear(renderer);
 		SDL_RenderCopy(renderer, scrtex, NULL, NULL);
 		SDL_RenderPresent(renderer);		
-		};
-
-	// zwolnienie powierzchni / freeing all surfaces
+	};
 
 	SDL_DestroyTexture(scrtex);
 	SDL_DestroyRenderer(renderer);
