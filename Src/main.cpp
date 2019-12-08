@@ -107,7 +107,7 @@ int main(int argc, char **argv) {
 	);
 
 	graphicsPipelineManager.AddPipeline(
-		new PE_MovingEtiImage(sdlScreenHandler.screen,SCREEN_WIDTH,SCREEN_HEIGHT, &timeProvider)
+		new PE_MovingEtiImage(sdlScreenHandler.screen,SCREEN_WIDTH,SCREEN_HEIGHT, & timeProvider)
 	);
 
 	graphicsPipelineManager.Init();
