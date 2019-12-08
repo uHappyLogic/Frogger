@@ -14,6 +14,7 @@
 #include "PipelineElements/PE_UpperInfo.hpp"
 #include "PipelineElements/PE_QuitHandler.hpp"
 #include "PipelineElements/PE_EventHandler.hpp"
+#include "PipelineElements/PE_MovingBlock.hpp"
 
 
 #define SCREEN_WIDTH	640
@@ -70,6 +71,13 @@ int main(int argc, char **argv) {
 
 	quit = 0;
 
+	auto carBmp = SDL_LoadBMP("./Assets/eti.bmp");
+
+	if (carBmp == NULL) {
+		printf("SDL_LoadBMP(eti.bmp) error: %s\n", SDL_GetError());
+		SDL_Quit();
+	};
+
 	auto sdlScreenHandler = SdlScreenHandler(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	auto timeProvider = PE_TimeProvider();
@@ -97,6 +105,13 @@ int main(int argc, char **argv) {
 
 	graphicsPipelineManager.AddPipeline(
 		new PE_MovingEtiImage(sdlScreenHandler.screen,SCREEN_WIDTH,SCREEN_HEIGHT, & timeProvider)
+	);
+
+	graphicsPipelineManager.AddPipeline(
+		new PE_MovingBlock(carBmp, 30,false,sdlScreenHandler.screen, SCREEN_WIDTH, SCREEN_HEIGHT/4, &timeProvider)
+	);
+	graphicsPipelineManager.AddPipeline(
+		new PE_MovingBlock(carBmp, 30,true, sdlScreenHandler.screen, -20, SCREEN_HEIGHT / 2, &timeProvider)
 	);
 
 	graphicsPipelineManager.AddPipeline(
