@@ -41,6 +41,12 @@ void PE_MovingBlock::Execute()
 	this->currentDrag = (movingLeft ? -1 : 1) * (deltaX);
 	currentPos_x += this->currentDrag;
 
+	// element cycling logic
+	if (currentPos_x >  2 * screen->w)
+		currentPos_x = -pictureSrc->w;
+	else if (currentPos_x < -pictureSrc->w)
+		currentPos_x = 2 * screen->w;
+
 	DrawSurface(
 		screen,
 		pictureSrc,

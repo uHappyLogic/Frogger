@@ -91,10 +91,6 @@ int main(int argc, char **argv) {
 		timeProvider
 	);
 
-	/*graphicsPipelineManager.AddPipeline(
-		new PE_MovingEtiImage(sdlScreenHandler.screen,SCREEN_WIDTH,SCREEN_HEIGHT, & timeProvider)
-	);
-	*/
 	graphicsPipelineManager.AddPipeline(
 		new PE_MovingBlock(roadBmp, 0, true, sdlScreenHandler.screen, SCREEN_WIDTH / 2, rows[4] + 16, timeProvider, frog, action_options::NOTHING, 9)
 	);
@@ -136,6 +132,7 @@ int main(int argc, char **argv) {
 	graphicsPipelineManager.AddPipeline(
 		new PE_River(riverBmp, 10, sdlScreenHandler.screen, SCREEN_WIDTH, rows[12], timeProvider, true, frog, 9)
 	);
+
 	graphicsPipelineManager.AddPipeline(
 		new PE_MovingBlock(planckBmp, 30, true, sdlScreenHandler.screen, 0, rows[8], timeProvider, frog, action_options::DRAG, 5)
 	); graphicsPipelineManager.AddPipeline(
