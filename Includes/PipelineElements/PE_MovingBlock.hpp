@@ -36,9 +36,9 @@ public:
 
 	void Clean() override;
 
-	CollisionRect GetCollisionRect();
+	CollisionRect GetCollisionRect() override;
 
-	bool Collide(bool collide);
+	bool Collide(bool collide) override;
 
 private:
 	int speed;

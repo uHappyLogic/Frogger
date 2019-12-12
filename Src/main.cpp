@@ -11,7 +11,6 @@
 
 #include "PipelineElements/PE_Background.hpp"
 #include "PipelineElements/PE_TimeProvider.hpp"
-#include "PipelineElements/PE_MovingEtiImage.hpp"
 #include "PipelineElements/PE_UpperInfo.hpp"
 #include "PipelineElements/PE_QuitHandler.hpp"
 #include "PipelineElements/PE_EventHandler.hpp"
@@ -27,7 +26,7 @@
 int main(int argc, char **argv) {
 	int quit, rc;
 	SDL_Event event;
-	
+
 	SDL_Texture *scrtex;
 	SDL_Window *window;
 	SDL_Renderer *renderer;
@@ -65,7 +64,7 @@ int main(int argc, char **argv) {
 		printf("SDL_CreateWindowAndRenderer error: %s\n", SDL_GetError());
 		return 1;
 		};
-	
+
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
 	SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
@@ -110,23 +109,23 @@ int main(int argc, char **argv) {
 
 	auto sdlScreenHandler = SdlScreenHandler(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-	auto timeProvider = PE_TimeProvider();
+	auto timeProvider = new PE_TimeProvider();
 	auto charsetHandler = CharsetHandler();
 
-	auto eventHandler = PE_EventHandler();
-	
-	auto frog = new PE_Frog(frogBmp, sdlScreenHandler.screen, SCREEN_WIDTH, SCREEN_HEIGHT, &timeProvider, &eventHandler);
+	auto eventHandler = new PE_EventHandler();
+
+	auto frog = new PE_Frog(frogBmp, sdlScreenHandler.screen, SCREEN_WIDTH, SCREEN_HEIGHT, timeProvider, eventHandler);
 
 	auto collidableManager = CollidableManager(frog);
 
-	auto quitHandler = PE_QuitHandler(&eventHandler);
+	auto quitHandler = PE_QuitHandler(eventHandler);
 
 	auto graphicsPipelineManager = PipelineElementManager(
 		&collidableManager
 	);
 
 	graphicsPipelineManager.AddPipeline(
-		&eventHandler
+		eventHandler
 	);
 
 	graphicsPipelineManager.AddPipeline(
@@ -134,7 +133,7 @@ int main(int argc, char **argv) {
 	);
 
 	graphicsPipelineManager.AddPipeline(
-		&timeProvider
+		timeProvider
 	);
 
 	/*graphicsPipelineManager.AddPipeline(
@@ -142,56 +141,56 @@ int main(int argc, char **argv) {
 	);
 	*/
 	graphicsPipelineManager.AddPipeline(
-		new PE_MovingBlock(roadBmp, 0, true, sdlScreenHandler.screen, SCREEN_WIDTH / 2, rows[4] + 16, &timeProvider, frog, action_options::NOTHING)
+		new PE_MovingBlock(roadBmp, 0, true, sdlScreenHandler.screen, SCREEN_WIDTH / 2, rows[4] + 16, timeProvider, frog, action_options::NOTHING)
 	);
 
 	graphicsPipelineManager.AddPipeline(
-		new PE_MovingBlock(carBmp, 30, false, sdlScreenHandler.screen, SCREEN_WIDTH + 160, rows[6], &timeProvider, frog, action_options::MOVE_TO_START)
+		new PE_MovingBlock(carBmp, 30, false, sdlScreenHandler.screen, SCREEN_WIDTH + 160, rows[6], timeProvider, frog, action_options::MOVE_TO_START)
 	);
 	graphicsPipelineManager.AddPipeline(
-		new PE_MovingBlock(carBmp, 30,false,sdlScreenHandler.screen, SCREEN_WIDTH+60, rows[5], &timeProvider, frog, action_options::MOVE_TO_START)
+		new PE_MovingBlock(carBmp, 30,false,sdlScreenHandler.screen, SCREEN_WIDTH+60, rows[5], timeProvider, frog, action_options::MOVE_TO_START)
 	);
 	graphicsPipelineManager.AddPipeline(
-		new PE_MovingBlock(carBmp, 30, true, sdlScreenHandler.screen, -100, rows[4], &timeProvider, frog, action_options::MOVE_TO_START)
+		new PE_MovingBlock(carBmp, 30, true, sdlScreenHandler.screen, -100, rows[4], timeProvider, frog, action_options::MOVE_TO_START)
 	);
 	graphicsPipelineManager.AddPipeline(
-		new PE_MovingBlock(carBmp, 30, false, sdlScreenHandler.screen, SCREEN_WIDTH, rows[3], &timeProvider, frog, action_options::MOVE_TO_START)
+		new PE_MovingBlock(carBmp, 30, false, sdlScreenHandler.screen, SCREEN_WIDTH, rows[3], timeProvider, frog, action_options::MOVE_TO_START)
 	);
 	graphicsPipelineManager.AddPipeline(
-		new PE_MovingBlock(carBmp, 30, true, sdlScreenHandler.screen, 0, rows[2], &timeProvider, frog, action_options::MOVE_TO_START)
-	);
-
-	graphicsPipelineManager.AddPipeline(
-		new PE_MovingBlock(carBmp, 30, true, sdlScreenHandler.screen, -40, rows[1], &timeProvider, frog, action_options::MOVE_TO_START)
+		new PE_MovingBlock(carBmp, 30, true, sdlScreenHandler.screen, 0, rows[2], timeProvider, frog, action_options::MOVE_TO_START)
 	);
 
 	graphicsPipelineManager.AddPipeline(
-		new PE_River(riverBmp, 10, sdlScreenHandler.screen, SCREEN_WIDTH, rows[8], &timeProvider,true)
-	);
-	graphicsPipelineManager.AddPipeline(
-		new PE_River(riverBmp, 10, sdlScreenHandler.screen, SCREEN_WIDTH, rows[9], &timeProvider, false)
+		new PE_MovingBlock(carBmp, 30, true, sdlScreenHandler.screen, -40, rows[1], timeProvider, frog, action_options::MOVE_TO_START)
 	);
 
 	graphicsPipelineManager.AddPipeline(
-		new PE_River(riverBmp, 10, sdlScreenHandler.screen, SCREEN_WIDTH, rows[10], &timeProvider, true)
+		new PE_River(riverBmp, 10, sdlScreenHandler.screen, SCREEN_WIDTH, rows[8], timeProvider,true)
+	);
+	graphicsPipelineManager.AddPipeline(
+		new PE_River(riverBmp, 10, sdlScreenHandler.screen, SCREEN_WIDTH, rows[9], timeProvider, false)
 	);
 
 	graphicsPipelineManager.AddPipeline(
-		new PE_River(riverBmp, 10, sdlScreenHandler.screen, SCREEN_WIDTH, rows[11], &timeProvider, false)
+		new PE_River(riverBmp, 10, sdlScreenHandler.screen, SCREEN_WIDTH, rows[10], timeProvider, true)
+	);
+
+	graphicsPipelineManager.AddPipeline(
+		new PE_River(riverBmp, 10, sdlScreenHandler.screen, SCREEN_WIDTH, rows[11], timeProvider, false)
 	);
 	graphicsPipelineManager.AddPipeline(
-		new PE_River(riverBmp, 10, sdlScreenHandler.screen, SCREEN_WIDTH, rows[12], &timeProvider, true)
+		new PE_River(riverBmp, 10, sdlScreenHandler.screen, SCREEN_WIDTH, rows[12], timeProvider, true)
 	);
 	graphicsPipelineManager.AddPipeline(
-		new PE_MovingBlock(carBmp, 30, true, sdlScreenHandler.screen, 0, rows[8], &timeProvider, frog, action_options::DRAG)
+		new PE_MovingBlock(carBmp, 30, true, sdlScreenHandler.screen, 0, rows[8], timeProvider, frog, action_options::DRAG)
 	); graphicsPipelineManager.AddPipeline(
-		new PE_MovingBlock(carBmp, 30, false, sdlScreenHandler.screen, SCREEN_WIDTH, rows[9], &timeProvider, frog, action_options::DRAG)
+		new PE_MovingBlock(carBmp, 30, false, sdlScreenHandler.screen, SCREEN_WIDTH, rows[9], timeProvider, frog, action_options::DRAG)
 	); graphicsPipelineManager.AddPipeline(
-		new PE_MovingBlock(carBmp, 30, true, sdlScreenHandler.screen, 0, rows[10], &timeProvider, frog, action_options::DRAG)
+		new PE_MovingBlock(carBmp, 30, true, sdlScreenHandler.screen, 0, rows[10], timeProvider, frog, action_options::DRAG)
 	); graphicsPipelineManager.AddPipeline(
-		new PE_MovingBlock(carBmp, 30, false, sdlScreenHandler.screen, SCREEN_WIDTH, rows[11], &timeProvider, frog, action_options::DRAG)
+		new PE_MovingBlock(carBmp, 30, false, sdlScreenHandler.screen, SCREEN_WIDTH, rows[11], timeProvider, frog, action_options::DRAG)
 	); graphicsPipelineManager.AddPipeline(
-		new PE_MovingBlock(carBmp, 30, true, sdlScreenHandler.screen, 0, rows[12], &timeProvider, frog, action_options::DRAG)
+		new PE_MovingBlock(carBmp, 30, true, sdlScreenHandler.screen, 0, rows[12], timeProvider, frog, action_options::DRAG)
 	);
 
 	graphicsPipelineManager.AddPipeline(
@@ -204,7 +203,7 @@ int main(int argc, char **argv) {
 			SCREEN_WIDTH,
 			SCREEN_HEIGHT,
 			charsetHandler.charset,
-			&timeProvider
+			timeProvider
 		)
 	);
 
