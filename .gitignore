@@ -3,3 +3,10 @@ bin/**
 .git/**
 
 *.vcxproj.user
+
+
+CMakeCache.txt
+CMakeFiles/*
+Frogger
+Makefile
+cmake_install.cmake
