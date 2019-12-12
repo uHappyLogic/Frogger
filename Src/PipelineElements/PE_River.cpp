@@ -11,7 +11,9 @@ PE_River::PE_River(
 	int screenWidth,
 	int screenHeigh,
 	PE_TimeProvider* timeProvider,
-	bool movingRight
+	bool movingRight,
+	PE_Frog* frog,
+	int priority
 ) :
 	screen(screen),
 	screenWidth(screenWidth),
@@ -19,8 +21,9 @@ PE_River::PE_River(
 	timeProvider(timeProvider),
 	pictureSrc(pictureSrc),
 	speed(speed),
-	movingRight(movingRight)
-	
+	movingRight(movingRight),
+	frog(frog),
+	priority(priority)
 {
 
 }
@@ -53,4 +56,29 @@ void PE_River::Execute()
 void PE_River::Clean()
 {
 
+}
+
+CollidablePipelineElement::CollisionRect PE_River::GetCollisionRect()
+{
+	auto rect = CollidablePipelineElement::CollisionRect();
+	rect.width = pictureSrc->w;
+	rect.height = pictureSrc->h;
+	rect.x = currentPosX;
+	rect.y = currentPosY;
+
+	return rect;
+}
+
+void PE_River::Collide(bool collide)
+{
+	if (true)
+	{
+		frog->ResetToStartPosition();
+		printf("Frog killed by water. Moving to start position\n");
+	}
+}
+
+int PE_River::GetPriority()
+{
+	return this->priority;
 }

@@ -29,6 +29,8 @@ public:
 
 	void ResetToStartPosition();
 
+	void dragHorizontaly(float drag);
+
 private:
 	SDL_Surface * screen;
 	SDL_Surface * pictureSrc;

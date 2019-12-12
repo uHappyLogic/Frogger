@@ -8,26 +8,42 @@ CollidableManager::CollidableManager(PE_Frog* frog)
 {
 }
 
+// TODO: study how the elements are inserted given their priority
+// TIP: study forward linked list, insert sort
 void CollidableManager::AddCollidable(CollidablePipelineElement* element)
 {
 	if (this->head == nullptr)
 	{
-		// Insert new element as a head
+		// If there is 0 elements registered, this one shall become head
 		this->head = new Node();
 		this->head->element = element;
 		this->head->next = nullptr;
 	}
+	if (this->head->element->GetPriority() > element->GetPriority())
+	{
+		// If head has higher priority than newly registered element
+		// then it shall replace it as a head
+		auto tmp = this->head;
+		this->head = new Node();
+		this->head->element = element;
+		this->head->next = tmp;
+	}
 	else
 	{
-		// Insert new element as a last node
-		Node* currentLast = this->head;
+		Node* curr = this->head;
 
-		while (currentLast->next)
-			currentLast = currentLast->next;
+		while (
+			curr->next &&
+			curr->next->element->GetPriority() <= element->GetPriority()
+		)
+		{
+			curr = curr->next;
+		}
 
-		currentLast->next = new Node();
-		currentLast->next->element = element;
-		currentLast->next->next = nullptr;
+		auto tmp = curr->next;
+		curr->next = new Node();
+		curr->next->element = element;
+		curr->next->next = tmp;
 	}
 }
 
@@ -48,19 +64,15 @@ void CollidableManager::TriggerCollision()
 		float upperY = (rect.y - rect.height / 2);
 		float bottomY = (rect.y + rect.height / 2);
 
-		/*
-		printf("X [%4.2f; %4.2f] Y[%4.2f; %4.2f]",
-			leftBorderX, rightBorderX, bottomY, upperY
-		);
-		*/
-
 		auto isOnTheSameXAxis = (x <= rightBorderX && x >= leftBorderX);
 		auto isOnTheSameYAxis = (y <= bottomY && y >= upperY);
 
 		if (isOnTheSameYAxis && isOnTheSameXAxis)
 		{
-			if (curr->element->Collide(true))
-				return;
+			curr->element->Collide(true);
+
+			// stop the collision checking after occuring first
+			return;
 		}
 		else
 		{

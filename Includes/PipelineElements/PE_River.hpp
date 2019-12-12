@@ -1,9 +1,10 @@
-#include "PipelineElement.h"
+#include "CollidablePipelineElement.hpp"
 #include "PipelineElements/PE_TimeProvider.hpp"
 #include "PipelineElements/PE_EventHandler.hpp"
+#include "PipelineElements/PE_Frog.hpp"
 
 
-class PE_River : public PipelineElement
+class PE_River : public CollidablePipelineElement
 {
 public:
 
@@ -14,7 +15,9 @@ public:
 		int screenWidth,
 		int screenHeigh,
 		PE_TimeProvider* timeProvider,
-		bool movingRight
+		bool movingRight,
+		PE_Frog* frog,
+		int priority
 		);
 
 	void Setup() override;
@@ -22,6 +25,12 @@ public:
 	void Execute() override;
 
 	void Clean() override;
+
+	CollisionRect GetCollisionRect() override;
+
+	void Collide(bool collide) override;
+
+	int GetPriority() override;
 
 private:
 	bool movingRight;
@@ -34,4 +43,6 @@ private:
 	float distance = 0;
 	float currentPosX;
 	float currentPosY;
+	PE_Frog* frog;
+	int priority;
 };

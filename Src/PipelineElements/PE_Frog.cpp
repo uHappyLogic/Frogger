@@ -41,7 +41,7 @@ void PE_Frog::Execute()
 		currentPosX -= 32;
 	if (eventHandler->right)
 		currentPosX += 32;
-	
+
 	DrawSurface(
 		screen,
 		pictureSrc,
@@ -68,4 +68,10 @@ void PE_Frog::ResetToStartPosition()
 {
 	currentPosX = startPosX;
 	currentPosY = startPosY;
+}
+
+
+void PE_Frog::dragHorizontaly(float drag)
+{
+	currentPosX += drag;
 }

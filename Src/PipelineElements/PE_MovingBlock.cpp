@@ -13,7 +13,8 @@ PE_MovingBlock::PE_MovingBlock(
 	int currentPos_y,
 	PE_TimeProvider* timeProvider,
 	PE_Frog* frog,
-	action_options::ActionOptions ap)
+	action_options::ActionOptions ap,
+	int layer)
 	:
 	screen(screen),
 	currentPos_x(currentPos_x),
@@ -23,7 +24,8 @@ PE_MovingBlock::PE_MovingBlock(
 	speed(speed),
 	pictureSrc(pictureSrc),
 	frog(frog),
-	ap(ap)
+	ap(ap),
+	layer(layer)
 {
 
 }
@@ -36,7 +38,8 @@ void PE_MovingBlock::Setup()
 void PE_MovingBlock::Execute()
 {
 	float deltaX = speed * timeProvider->getDeltaTime();
-	currentPos_x += (movingLeft ? -1 : 1) * (deltaX);
+	this->currentDrag = (movingLeft ? -1 : 1) * (deltaX);
+	currentPos_x += this->currentDrag;
 
 	DrawSurface(
 		screen,
@@ -61,7 +64,7 @@ CollidablePipelineElement::CollisionRect PE_MovingBlock::GetCollisionRect()
 	return rect;
 }
 
-bool PE_MovingBlock::Collide(bool collide)
+void PE_MovingBlock::Collide(bool collide)
 {
 	if (collide)
 	{
@@ -70,17 +73,19 @@ bool PE_MovingBlock::Collide(bool collide)
 		case action_options::NOTHING:
 			break;
 		case action_options::MOVE_TO_START:
-			frog->ResetToStartPosition();
+			this->frog->ResetToStartPosition();
 			printf("Moving to start position\n");
 			break;
 		case action_options::DRAG:
+			this->frog->dragHorizontaly(this->currentDrag);
 			break;
 		default:
 			break;
 		}
-
-		return ap != action_options::NOTHING;
 	}
+}
 
-	return false;
+int PE_MovingBlock::GetPriority()
+{
+	return layer;
 }

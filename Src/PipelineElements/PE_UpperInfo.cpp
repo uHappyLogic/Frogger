@@ -9,7 +9,7 @@
 PE_UpperInfo::PE_UpperInfo(
 	SDL_Surface * screen,
 	int screenWidth,
-	int screenHeigh,
+	int screenHeight,
 	SDL_Surface *charset,
 	PE_TimeProvider* timeProvider)
 	: screen(screen),

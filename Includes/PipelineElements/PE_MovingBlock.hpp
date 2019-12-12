@@ -28,7 +28,8 @@ public:
 		int currentPos_y,
 		PE_TimeProvider* timeProvider,
 		PE_Frog* frog,
-		action_options::ActionOptions ap);
+		action_options::ActionOptions ap,
+		int layer);
 
 	void Setup() override;
 
@@ -38,7 +39,9 @@ public:
 
 	CollisionRect GetCollisionRect() override;
 
-	bool Collide(bool collide) override;
+	void Collide(bool collide) override;
+
+	int GetPriority() override;
 
 private:
 	int speed;
@@ -51,4 +54,7 @@ private:
 	float distance = 0;
 	PE_Frog* frog;
 	action_options::ActionOptions ap;
+	int layer;
+
+	float currentDrag = 0.f;
 };

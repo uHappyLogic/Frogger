@@ -18,4 +18,6 @@ public:
 
 	// This method is called once just before exit
 	virtual void Clean() = 0;
+
+	virtual ~PipelineElement(){ }
 };
