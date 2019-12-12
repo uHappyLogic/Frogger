@@ -14,6 +14,7 @@ include_directories(./Includes)
 add_executable(Frogger
     ./Src/CharsetHandler.cpp
     ./Src/CollidableManager.cpp
+    ./Src/main.cpp
     ./Src/PipelineElementManager.cpp
     ./Src/PipelineElements
     ./Src/PipelineElements/PE_Background.cpp
@@ -24,9 +25,9 @@ add_executable(Frogger
     ./Src/PipelineElements/PE_River.cpp
     ./Src/PipelineElements/PE_TimeProvider.cpp
     ./Src/PipelineElements/PE_UpperInfo.cpp
+    ./Src/SdlContextHandler.cpp
     ./Src/SdlScreenHandler.cpp
     ./Src/SdlUtils.cpp
-    ./Src/main.cpp
 )
 
 
