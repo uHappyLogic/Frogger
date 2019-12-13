@@ -12,9 +12,9 @@ public:
 	PipelineElementManager(
 		CollidableManager *collidableManager);
 
-	void AddPipeline(CollidablePipelineElement* element);
+	void AddElement(CollidablePipelineElement* element);
 
-	void AddPipeline(PipelineElement* element);
+	void AddElement(PipelineElement* element);
 
 	void Init();
 

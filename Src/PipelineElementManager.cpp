@@ -7,13 +7,13 @@ PipelineElementManager::PipelineElementManager(CollidableManager *collidableMana
 
 }
 
-void PipelineElementManager::AddPipeline(CollidablePipelineElement* element)
+void PipelineElementManager::AddElement(CollidablePipelineElement* element)
 {
 	collidableManager->AddCollidable(element);
-	this->AddPipeline((PipelineElement*)element);
+	this->AddElement((PipelineElement*)element);
 }
 
-void PipelineElementManager::AddPipeline(PipelineElement* element)
+void PipelineElementManager::AddElement(PipelineElement* element)
 {
 	if (this->head == nullptr)
 	{
