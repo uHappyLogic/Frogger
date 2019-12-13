@@ -40,6 +40,7 @@ int main(int argc, char **argv) {
 	 *												Assets loading
 	 * ====================================================================================================================== 
 	 */
+
 	auto carBmp = TextureHandler("./Assets/greenCar.bmp");
 	auto frogBmp = TextureHandler("./Assets/frog1.bmp");
 	auto planckBmp = TextureHandler("./Assets/block.bmp");
@@ -51,18 +52,19 @@ int main(int argc, char **argv) {
 	 *												Rows Y generation
 	 * ======================================================================================================================
 	 */
+
 	int rows[15];
 	for (int i = 0; i < 480 / 32; i++)
 	{
 		rows[i] = ((480 - (i * 32)) - 16);
 	}
 
-
 	/*
 	 * ======================================================================================================================
 	 *												Scene setup
 	 * ======================================================================================================================
 	 */
+
 	auto timeProvider = new PE_TimeProvider();
 	auto charsetHandler = CharsetHandler();
 
@@ -192,5 +194,6 @@ int main(int argc, char **argv) {
 	 *		    On exit all destructors are run, thus all resources attached to e.g. TextureHandlers are freed
 	 * ======================================================================================================================
 	 */
+
 	return 0;
 };
