@@ -1,2 +1,2 @@
 # Frogger
-Simple C++ Frogger written in C++
+Simple Frogger written in C++ during single training done by me for one of my friends.
