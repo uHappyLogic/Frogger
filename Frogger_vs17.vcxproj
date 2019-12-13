@@ -24,7 +24,6 @@
     <ClCompile Include="Src\PipelineElements\PE_EventHandler.cpp" />
     <ClCompile Include="Src\PipelineElements\PE_Frog.cpp" />
     <ClCompile Include="Src\PipelineElements\PE_MovingBlock.cpp" />
-    <ClCompile Include="Src\PipelineElements\PE_MovingEtiImage.cpp" />
     <ClCompile Include="Src\PipelineElements\PE_QuitHandler.cpp" />
     <ClCompile Include="Src\PipelineElements\PE_River.cpp" />
     <ClCompile Include="Src\PipelineElements\PE_TimeProvider.cpp" />
@@ -32,6 +31,7 @@
     <ClCompile Include="Src\PipelineElements\PE_Background.cpp" />
     <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\PipelineElements\PE_UpperInfo.cpp" />
+    <ClCompile Include="Src\SdlContextHandler.cpp" />
     <ClCompile Include="Src\SdlScreenHandler.cpp" />
     <ClCompile Include="Src\SdlUtils.cpp" />
   </ItemGroup>
@@ -39,7 +39,6 @@
     <Image Include="Assets\block.bmp" />
     <Image Include="Assets\blueCar.bmp" />
     <Image Include="Assets\cs8x8.bmp" />
-    <Image Include="Assets\eti.bmp" />
     <Image Include="Assets\frog1.bmp" />
     <Image Include="Assets\greenCar.bmp" />
     <Image Include="Assets\redCar.bmp" />
@@ -98,6 +97,7 @@
     <ClInclude Include="Includes\PipelineElementManager.h" />
     <ClInclude Include="Includes\PipelineElements\PE_Background.hpp" />
     <ClInclude Include="Includes\PipelineElements\PE_UpperInfo.hpp" />
+    <ClInclude Include="Includes\SdlContextHandler.hpp" />
     <ClInclude Include="Includes\SdlScreenHandler.h" />
     <ClInclude Include="Includes\SdlUtils.hpp" />
     <ClInclude Include="Includes\Sdl\begin_code.h" />
@@ -183,6 +183,7 @@
     <ClInclude Include="Includes\Sdl\SDL_version.h" />
     <ClInclude Include="Includes\Sdl\SDL_video.h" />
     <ClInclude Include="Includes\Sdl\SDL_vulkan.h" />
+    <ClInclude Include="Includes\TextureHandler.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="libSDL2.a" />
